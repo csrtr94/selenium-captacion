@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "exceljs": "^3.5.0",
     "selenium-webdriver": "^4.0.0-alpha.5",
     "yargs": "^15.0.2"
   }

@@ -1,4 +1,5 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
 const selector = require('./../selectores/selector');
 const readExcel = require('./../readExcel');
 
@@ -6,9 +7,10 @@ const readExcel = require('./../readExcel');
 
 
 exports.prueba = async ()=> {
-
-    let driver = await new Builder().forBrowser('chrome').build();
-       let excel = await readExcel(2);
+    //let driver = await new Builder().forBrowser('chrome').build();
+    let options = new chrome.Options().setMobileEmulation({ deviceName: 'Galaxy S5' });
+    let driver = chrome.Driver.createSession(options);
+       let excel = await readExcel(4);
        console.log("Resulta2: ",excel);
         await driver.get("http://192.168.93.81/captacionOnline/?codCanal=2");
         // PP http://192.168.76.10/captacionOnline/?codCanal=2
@@ -25,8 +27,8 @@ exports.prueba = async ()=> {
         .then(()=>console.log("Email ok"))
         .catch( err => console.log("Error email"));
         
-        await driver.findElement( By.xpath(selector.capaUno.btn)).click();
-
+        let comenzar = driver.wait( until.elementLocated(By.xpath("/html/body/div[1]/div/div[2]/div/div[5]/button"),10000))
+        await comenzar.click();
         await driver.sleep(5000);
 
         // let check1 = driver.wait( until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[1]/div[1]/div/div[3]/span/span[1]/input"),10000));
@@ -69,8 +71,10 @@ exports.prueba = async ()=> {
         await driver.findElement( By.xpath(selector.capaCuatro.btnAuth)).click()
         .then(()=>console.log("Auth ok")).catch(err => console.log("Error auth"));
 
-        // await driver.sleep(5000);
+        //  await driver.sleep(5000);
         
+        //--------------------------------------------------------------------------------------------------------------------
+
         // let esUsPerson = driver.wait( until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[1]/div/div[1]/div[2]/label[1]/span[1]/span[1]/input"),10000));
         // await esUsPerson.click()
         // .then(()=>console.log("US Person 1 ok")).catch(err => console.log("Error al seleccionar US Person"));
@@ -86,29 +90,31 @@ exports.prueba = async ()=> {
         // await usPerson.click()
         // .then(()=>console.log("US Person 2 ok")).catch(err => console.log("Error al seleccionar US Person 2"));
 
-        let tipoActividad = driver.wait( until.elementLocated( By.xpath(selector.capaCinco.tipoActividad),10000));
-        await tipoActividad.sendKeys(excel.tipoActividad, Key.ENTER)
-        .then(()=>console.log("Tipo de actividad ok")).catch(err => console.log("Error al seleccionar tipo de actividad"));
+        // let tipoActividad = driver.wait( until.elementLocated( By.xpath(selector.capaCinco.tipoActividad),10000));
+        // await tipoActividad.sendKeys(excel.tipoActividad, Key.ENTER)
+        // .then(()=>console.log("Tipo de actividad ok")).catch(err => console.log("Error al seleccionar tipo de actividad"));
         
-        let btnNext =  driver.wait( until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[4]/button"),10000));
-        await btnNext.click();
-
-
+        // let btnNext =  driver.wait( until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[5]/button"),10000));
+        // await btnNext.click();
+        
+        //------------------------------------------------------------------------------------------------------------------
+        
+        await driver.sleep(15000);
+        
         //LAST PAGE
-        let cup = driver.wait(until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[1]/div/div[2]/label/span[1]/span[1]/input"),10000));
-        await driver.sleep(3000)
+        let cup = driver.wait(until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[1]/div/div[2]/label/span[1]/span[1]/input"),15000));
         await cup.click()
         .then(()=>console.log("CUP ok")).catch(err => console.log("Error al seleccionar CUP"));
 
-        let registroFirmas = driver.wait(until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[2]/div/div[2]/label/span[1]/span[1]/input"),10000));
-         await registroFirmas.click()
+        let resumen = driver.wait(until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[2]/div/div[2]/label/span[1]/span[1]/input"),15000));
+         await resumen.click()
          .then(()=>console.log("Resumen ok")).catch(err => console.log("Error al seleccionar resumen"));
 
         let FATCA = driver.wait(until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[3]/div/div[2]/label/span[1]/span[1]/input"),10000));
         await FATCA.click()
         .then(()=>console.log("FATCA ok")).catch(err => console.log("Error al seleccionar FATCA"));
 
-        let anexos = driver.wait(until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[4]/div/div[2]/label/span[1]/span[1]/input"),10000));
+        let anexos = driver.wait(until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[4]/div/div[2]/label/span[1]/span[1]/input"),15000));
         await anexos.click()
         .then(()=>console.log("Anexos ok")).catch(err => console.log("Error al seleccionar anexos"));
 
@@ -116,12 +122,13 @@ exports.prueba = async ()=> {
         // await KYC.click()
         // .then(()=>console.log("KYC ok")).catch(err => console.log("Error al seleccionar KYC"));
         ///html/body/div/div/div[2]/div/div[8]/button
-        let btnContratar = driver.wait( until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[5]/button"),10000));   
+        driver.sleep(10000);
+        let btnContratar = driver.wait( until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[4]/button"),10000));   
         await btnContratar.click();
 
-        await driver.wait( until.elementLocated(By.xpath("/html/body/div[2]/div[2]/div/div[1]/div/div/div/input"),3000)).sendKeys(excel.sms)
+        await driver.wait( until.elementLocated(By.xpath("/html/body/div[2]/div[2]/div/div[1]/div/div/div/input"),5000)).sendKeys(excel.sms)
         .then(()=>console.log("SMS ok")).catch(err => console.log("Error al ingresar SMS"));
-
+        
         let btnConf = driver.findElement( By.xpath("/html/body/div[2]/div[2]/div/div[1]/button"));
         await btnConf.click();
 

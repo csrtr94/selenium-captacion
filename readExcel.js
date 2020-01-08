@@ -3,8 +3,7 @@ const wb = new excel.Workbook();
 const path = require('path');
 
 module.exports = (row) => {
-
-    
+ 
     let url = path.join(__dirname+'/test.xlsx');
 
     let resultado = wb.xlsx.readFile(url).then(()=>{

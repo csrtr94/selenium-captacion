@@ -8,7 +8,7 @@ const readExcel = require('./../readExcel');
 exports.prueba = async ()=> {
 
     let driver = await new Builder().forBrowser('chrome').build();
-       let excel = await readExcel(2);
+       let excel = await readExcel(2,"ctaVista");
        console.log("Resulta2: ",excel);
         await driver.get("http://192.168.93.81/captacionOnline/?codCanal=2");
         // PP http://192.168.76.10/captacionOnline/?codCanal=2

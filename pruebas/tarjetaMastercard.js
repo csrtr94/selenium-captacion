@@ -11,12 +11,12 @@ exports.prueba = async ()=> {
     //let driver = await new Builder().forBrowser('chrome').build();
     let options = new chrome.Options().setMobileEmulation({ deviceName: 'Galaxy S5' });
     let driver = chrome.Driver.createSession(options);
-       let excel = await readExcel(5);
+       let excel = await readExcel(3,"ctaMastercard");
        //console.log("Resulta2: ",excel);
         await driver.get("http://192.168.93.81/captacionOnline/?codCanal=2");
         // PP http://192.168.76.10/captacionOnline/?codCanal=2
         // TEST http://192.168.93.81/captacionOnline/?codCanal=2
-        console.log("PRUEBA ALTA CTA VISTA".bgRed);
+        console.log("PRUEBA CTA MASTERCARD".bgRed);
         console.log(`Dato de prueba: ${excel.rut}`.underline.bold);
         console.log("Datos personales".underline.bold);
         await driver.findElement( By.xpath(selector.capaUno.rut)).sendKeys(excel.rut)
@@ -77,7 +77,7 @@ exports.prueba = async ()=> {
         await driver.findElement( By.xpath(selector.capaCuatro.btnAuth)).click()
         .then(()=>console.log("Auth ok".green)).catch(err => console.log("Error auth"));
 
-        //  await driver.sleep(5000);
+         await driver.sleep(5000);
         
         //--------------------------------------------------------------------------------------------------------------------
 
@@ -96,12 +96,12 @@ exports.prueba = async ()=> {
         // await usPerson.click()
         // .then(()=>console.log("US Person 2 ok")).catch(err => console.log("Error al seleccionar US Person 2"));
 
-        // let tipoActividad = driver.wait( until.elementLocated( By.xpath(selector.capaCinco.tipoActividad),10000));
-        // await tipoActividad.sendKeys(excel.tipoActividad, Key.ENTER)
-        // .then(()=>console.log("Tipo de actividad ok")).catch(err => console.log("Error al seleccionar tipo de actividad"));
+        let tipoActividad = driver.wait( until.elementLocated( By.xpath(selector.capaCinco.tipoActividad),10000));
+        await tipoActividad.sendKeys(excel.tipoActividad, Key.ENTER)
+        .then(()=>console.log("Tipo de actividad ok")).catch(err => console.log("Error al seleccionar tipo de actividad"));
         
-        // let btnNext =  driver.wait( until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[5]/button"),10000));
-        // await btnNext.click();
+        let btnNext =  driver.wait( until.elementLocated( By.xpath("/html/body/div/div/div[2]/div/div[5]/button"),10000));
+        await btnNext.click();
         
         //------------------------------------------------------------------------------------------------------------------
         

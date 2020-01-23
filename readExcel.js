@@ -2,12 +2,12 @@ const excel = require('exceljs');
 const wb = new excel.Workbook();
 const path = require('path');
 
-module.exports = (row) => {
+module.exports = (row,nameSheet) => {
  
-    let url = path.join(__dirname+'/test.xlsx');
+    let url = path.join(__dirname+'/datoscaptacion.xlsx');
 
     let resultado = wb.xlsx.readFile(url).then(()=>{
-        let worksheet = wb.getWorksheet('Hoja1');
+        let worksheet = wb.getWorksheet(nameSheet);
         let resultExcel = {
             "rut" : worksheet.getRow(row).values[1],
             "cel" : worksheet.getRow(row).values[2],
